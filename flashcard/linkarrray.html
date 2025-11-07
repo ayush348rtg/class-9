@@ -140,91 +140,92 @@
   </div>
 
   <script>
-    fetch("./testarray.json")
-    .then(res => res.json())
-    .then(data => {
-      // Now 'data' is the same structure as your 'cards' array
-      const cards = data;
+  let cards = []; // declare globally so other functions can see it
+  let i = 0;
 
-      // Example: use it
-      console.log(cards[0].q); // "What is 7 × 8?"
+  const cardEl = document.getElementById("card");
+  const qEl = document.getElementById("question");
+  const aEl = document.getElementById("answer");
+  const indexBar = document.getElementById("indexBar");
+
+  function syncHeights() {
+    const frontH = qEl.scrollHeight + 32;
+    const backH  = aEl.scrollHeight + 32;
+    const maxH = Math.max(frontH, backH, 300);
+    cardEl.style.height = maxH + "px";
+  }
+
+  function render() {
+    qEl.innerHTML = cards[i].q;
+    aEl.innerHTML = cards[i].a;
+    cardEl.classList.remove("is-flipped");
+
+    [...indexBar.children].forEach((btn, idx) => {
+      btn.classList.toggle("active", idx === i);
     });
 
-    let i = 0;
-    const cardEl = document.getElementById("card");
-    const qEl = document.getElementById("question");
-    const aEl = document.getElementById("answer");
-    const indexBar = document.getElementById("indexBar");
-
-    cards.forEach((_, idx) => {
-      const btn = document.createElement("button");
-      btn.textContent = idx + 1;
-      btn.className = "index-btn";
-      btn.addEventListener("click", () => {
-        i = idx;
-        render();
-      });
-      indexBar.appendChild(btn);
-    });
-
-    function syncHeights() {
-      const frontH = qEl.scrollHeight + 32;
-      const backH  = aEl.scrollHeight + 32;
-      const maxH = Math.max(frontH, backH, 300);
-      cardEl.style.height = maxH + "px";
-    }
-
-    function render() {
-      qEl.innerHTML = cards[i].q;
-      aEl.innerHTML = cards[i].a;
-      cardEl.classList.remove("is-flipped");
-
-      [...indexBar.children].forEach((btn, idx) => {
-        btn.classList.toggle("active", idx === i);
-      });
-
-      const img = qEl.querySelector("img");
-      const spinner = qEl.querySelector(".spinner");
-      if (img) {
-        if (!img.complete) {
-          spinner.style.display = "block";
-          img.style.display = "none";
-          img.onload = () => {
-            spinner.style.display = "none";
-            img.style.display = "block";
-            syncHeights();
-          };
-        } else {
+    const img = qEl.querySelector("img");
+    const spinner = qEl.querySelector(".spinner");
+    if (img) {
+      if (!img.complete) {
+        if (spinner) spinner.style.display = "block";
+        img.style.display = "none";
+        img.onload = () => {
           if (spinner) spinner.style.display = "none";
           img.style.display = "block";
-        }
-      }
-
-      if (window.MathJax && MathJax.typesetPromise) {
-        MathJax.typesetPromise([qEl, aEl]).then(syncHeights).catch(syncHeights);
+          syncHeights();
+        };
       } else {
-        syncHeights();
+        if (spinner) spinner.style.display = "none";
+        img.style.display = "block";
       }
     }
 
-    cardEl.addEventListener("click", () => {
-      cardEl.classList.toggle("is-flipped");
-    });
+    if (window.MathJax && MathJax.typesetPromise) {
+      MathJax.typesetPromise([qEl, aEl]).then(syncHeights).catch(syncHeights);
+    } else {
+      syncHeights();
+    }
+  }
 
-    document.getElementById("prev").addEventListener("click", () => {
-      i = i === 0 ? cards.length - 1 : i - 1;
+  // Fetch JSON and then initialize everything
+  fetch("./testarray.json")
+    .then(res => res.json())
+    .then(data => {
+      cards = data;
+
+      // Build index buttons
+      cards.forEach((_, idx) => {
+        const btn = document.createElement("button");
+        btn.textContent = idx + 1;
+        btn.className = "index-btn";
+        btn.addEventListener("click", () => {
+          i = idx;
+          render();
+        });
+        indexBar.appendChild(btn);
+      });
+
+      // Initial render
       render();
     });
 
-    document.getElementById("next").addEventListener("click", () => {
-      i = i === cards.length - 1 ? 0 : i + 1;
-      render();
-    });
+  cardEl.addEventListener("click", () => {
+    cardEl.classList.toggle("is-flipped");
+  });
 
-    window.addEventListener("load", syncHeights);
-    window.addEventListener("resize", syncHeights);
-
+  document.getElementById("prev").addEventListener("click", () => {
+    i = i === 0 ? cards.length - 1 : i - 1;
     render();
-  </script>
+  });
+
+  document.getElementById("next").addEventListener("click", () => {
+    i = i === cards.length - 1 ? 0 : i + 1;
+    render();
+  });
+
+  window.addEventListener("resize", syncHeights);
+</script>
+
 </body>
 </html>
