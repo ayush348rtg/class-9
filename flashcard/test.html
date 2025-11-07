@@ -10,14 +10,14 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #0e111b; /* dark background */
+      background: #0e111b;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
       margin: 0;
-      color: #fff; /* default text color */
+      color: #fff;
     }
 
     .index-bar {
@@ -25,21 +25,21 @@
       gap: 8px;
       margin-bottom: 16px;
       padding: 10px;
-      border: 1px solid #2c2f3a; /* subtle dark border */
+      border: 1px solid #2c2f3a;
       border-radius: 8px;
-      background: #151a28; /* matches card color */
+      background: #151a28;
     }
     .index-btn {
       padding: 6px 12px;
       border-radius: 6px;
       border: 1px solid #2c2f3a;
-      background: #1f2433; /* dark gray button */
+      background: #1f2433;
       cursor: pointer;
       font-weight: 600;
       color: #fff;
     }
     .index-btn.active {
-      background: #2563eb; /* blue highlight */
+      background: #2563eb;
       color: #fff;
       border-color: #2563eb;
     }
@@ -57,6 +57,8 @@
       transition: transform 0.6s;
       cursor: pointer;
       font-family: 'Teachers', sans-serif;
+      margin: 20px;
+      padding: 20px;
     }
     .card.is-flipped { transform: rotateY(180deg); }
 
@@ -67,17 +69,29 @@
       border: 1px solid #2c2f3a;
       border-radius: 12px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.4);
-      background: #151a28; /* card background */
+      background: #151a28;
       padding: 16px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* centers main content vertically */
+      align-items: center;     /* centers horizontally */
       text-align: center;
-      display: grid;
-      place-items: center;
-      color: #fff; /* text color */
+      overflow: hidden;
     }
     .card__face--back {
       transform: rotateY(180deg);
-      background: #0e111b; /* slightly different dark shade */
+      background: #0e111b;
       color: #fff;
+    }
+
+    /* Topic pinned top-left */
+    #topics {
+      align-self: flex-start;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #fff;
+      margin-bottom: 12px;
     }
 
     .controls {
@@ -106,12 +120,13 @@
 
     /* Loading spinner */
     .spinner {
-      border: 4px solid #2c2f3a; /* dark border */
-      border-top: 4px solid #2563eb; /* blue accent */
+      border: 4px solid #2c2f3a;
+      border-top: 4px solid #2563eb;
       border-radius: 50%;
       width: 40px;
       height: 40px;
       animation: spin 1s linear infinite;
+      margin-top: 10px;
     }
     @keyframes spin {
       0% { transform: rotate(0deg); }
@@ -126,6 +141,7 @@
   <div class="scene">
     <div class="card" id="card">
       <div class="card__face card__face--front">
+        <div id="topics"></div>
         <div id="question">Question</div>
       </div>
       <div class="card__face card__face--back">
@@ -140,34 +156,46 @@
   </div>
 
   <script>
-    const cards = [
-      { q: "What is 7 × 8?", a: "56" },
-      { q: "Solve: \\(\\frac{1}{2}x + 3 = 5\\)", a: "x = 4" },
-      {
-        q: "Image example:<br><div class='spinner' id='spinner'></div><img src='https://picsum.photos/200/300' alt='sample image' style='display:none;'>",
-        a: "You can mix text + images + math like \\(a^2 + b^2 = c^2\\)."
-      }
-    ];
-
+    let cards = [];
     let i = 0;
+
     const cardEl = document.getElementById("card");
     const qEl = document.getElementById("question");
     const aEl = document.getElementById("answer");
+    const topicsEl = document.getElementById("topics");
     const indexBar = document.getElementById("indexBar");
 
-    cards.forEach((_, idx) => {
-      const btn = document.createElement("button");
-      btn.textContent = idx + 1;
-      btn.className = "index-btn";
-      btn.addEventListener("click", () => {
-        i = idx;
+    // Detect ?flashJson=filename from URL
+    const params = new URLSearchParams(window.location.search);
+    const flashJson = params.get("flashJson") || "cards"; // default to "cards"
+    const jsonFile = flashJson + ".json";
+
+    // Load JSON file dynamically
+    fetch(jsonFile)
+      .then(res => res.json())
+      .then(data => {
+        cards = data.cards;
+        buildIndexBar();
         render();
+      })
+      .catch(err => console.error("Error loading JSON:", err));
+
+    function buildIndexBar() {
+      indexBar.innerHTML = "";
+      cards.forEach((_, idx) => {
+        const btn = document.createElement("button");
+        btn.textContent = idx + 1;
+        btn.className = "index-btn";
+        btn.addEventListener("click", () => {
+          i = idx;
+          render();
+        });
+        indexBar.appendChild(btn);
       });
-      indexBar.appendChild(btn);
-    });
+    }
 
     function syncHeights() {
-      const frontH = qEl.scrollHeight + 32;
+      const frontH = qEl.scrollHeight + topicsEl.scrollHeight + 32;
       const backH  = aEl.scrollHeight + 32;
       const maxH = Math.max(frontH, backH, 300);
       cardEl.style.height = maxH + "px";
@@ -176,6 +204,7 @@
     function render() {
       qEl.innerHTML = cards[i].q;
       aEl.innerHTML = cards[i].a;
+      topicsEl.textContent = cards[i].topics.join(", ");
       cardEl.classList.remove("is-flipped");
 
       [...indexBar.children].forEach((btn, idx) => {
@@ -186,21 +215,22 @@
       const spinner = qEl.querySelector(".spinner");
       if (img) {
         if (!img.complete) {
-          spinner.style.display = "block";
+          if (spinner) spinner.style.display = "block";
           img.style.display = "none";
           img.onload = () => {
-            spinner.style.display = "none";
+            if (spinner) spinner.style.display = "none";
             img.style.display = "block";
             syncHeights();
           };
         } else {
           if (spinner) spinner.style.display = "none";
           img.style.display = "block";
+          syncHeights();
         }
       }
 
       if (window.MathJax && MathJax.typesetPromise) {
-        MathJax.typesetPromise([qEl, aEl]).then(syncHeights).catch(syncHeights);
+        MathJax.typesetPromise([qEl, aEl, topicsEl]).then(syncHeights).catch(syncHeights);
       } else {
         syncHeights();
       }
@@ -220,10 +250,7 @@
       render();
     });
 
-    window.addEventListener("load", syncHeights);
     window.addEventListener("resize", syncHeights);
-
-    render();
   </script>
 </body>
 </html>
