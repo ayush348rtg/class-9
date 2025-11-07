@@ -1,0 +1,11 @@
+{
+  "cards": [
+    { "q": "What is 7 × 8?", "a": "56", "topics": ["Multiplication", "Arithmetic"] },
+    { "q": "Solve: \\(\\frac{1}{2}x + 3 = 5\\)", "a": "x = 4", "topics": ["Linear Equations", "Algebra"] },
+    {
+      "q": "Image example:<br><div class='spinner' id='spinner'></div><img src='https://picsum.photos/200/300' alt='sample image' style='display:none;'>",
+      "a": "You can mix text + images + math like \\(a^2 + b^2 = c^2\\).",
+      "topics": ["Geometry", "Mixed Media"]
+    }
+  ]
+}
