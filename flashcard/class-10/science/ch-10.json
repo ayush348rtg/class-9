@@ -1,0 +1,54 @@
+{
+  "cards": [
+    {
+      "q": "Why are we unable to see objects in a dark room?",
+      "a": "Because no light is available to reflect from objects into our eyes.",
+      "topics": ["Introduction", "Visibility", "Light"]
+    },
+    {
+      "q": "What makes objects visible during the day?",
+      "a": "Sunlight reflects from objects and enters our eyes, making them visible.",
+      "topics": ["Introduction", "Visibility", "Light"]
+    },
+    {
+      "q": "What role does a transparent medium play in visibility?",
+      "a": "It transmits light through it, allowing us to see objects placed behind.",
+      "topics": ["Introduction", "Transparency", "Light"]
+    },
+    {
+      "q": "List some everyday optical phenomena associated with light.",
+      "a": "Image formation by mirrors, twinkling of stars, rainbow colors, bending of light, sharp shadows.",
+      "topics": ["Introduction", "Optical Phenomena", "Light"]
+    },
+    {
+      "q": "What evidence shows that light travels in straight lines?",
+      "a": "A small source of light casts a sharp shadow of an opaque object, indicating straight-line propagation.",
+      "topics": ["Introduction", "Straight-Line Propagation", "Light"]
+    },
+    {
+      "q": "What is diffraction of light?",
+      "a": "Diffraction is the bending of light around small obstacles, where the straight-line ray model fails.",
+      "topics": ["Introduction", "Diffraction", "Wave Nature of Light"]
+    },
+    {
+      "q": "What does wave theory of light explain?",
+      "a": "It explains phenomena like diffraction and interference of light.",
+      "topics": ["Introduction", "Wave Theory", "Light"]
+    },
+    {
+      "q": "Why was particle theory of light introduced?",
+      "a": "Because wave theory was inadequate to explain light–matter interactions, so light was considered as particles.",
+      "topics": ["Introduction", "Particle Theory", "Light"]
+    },
+    {
+      "q": "What is the modern quantum theory of light?",
+      "a": "It reconciles wave and particle properties, showing light is neither purely a wave nor purely a particle.",
+      "topics": ["Introduction", "Quantum Theory", "Light"]
+    },
+    {
+      "q": "What are the main topics studied in this chapter?",
+      "a": "Reflection of light by spherical mirrors and refraction of light, with real-life applications.",
+      "topics": ["Introduction", "Scope of Chapter", "Light"]
+    }
+  ]
+}
