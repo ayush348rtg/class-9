@@ -49,6 +49,66 @@
       "q": "Why does the water level not rise when salt or sugar is dissolved?",
       "a": "Because the solute particles occupy the spaces between water particles, showing that matter has inter-particle spaces.",
       "topics": ["Matter", "Physical Nature of Matter"]
+    },
+    {
+      "q": "What are the characteristics of particles of matter?",
+      "a": "They have space between them, they are continuously moving, and they attract each other with varying strength.",
+      "topics": ["Matter", "Characteristics of Particles"]
+    },
+    {
+      "q": "Define 'inter-particle space'.",
+      "a": "Inter-particle space refers to the gaps between particles of matter, which allow substances to mix or dissolve without increasing volume.",
+      "topics": ["Matter", "Space Between Particles"]
+    },
+    {
+      "q": "What experiment proves particles of matter have space between them?",
+      "a": "Dissolving salt or sugar in water shows that solute particles occupy spaces between water particles without raising the water level.",
+      "topics": ["Matter", "Space Between Particles", "Experiments"]
+    },
+    {
+      "q": "Define 'continuous motion of particles'.",
+      "a": "Particles of matter are in constant motion due to kinetic energy, leading to diffusion and mixing of substances.",
+      "topics": ["Matter", "Particle Motion"]
+    },
+    {
+      "q": "What is diffusion?",
+      "a": "Diffusion is the intermixing of particles of two different substances on their own, due to particle motion. It becomes faster with increase in temperature.",
+      "topics": ["Matter", "Diffusion", "Particle Motion"]
+    },
+    {
+      "q": "What activity shows particles are continuously moving?",
+      "a": "Incense stick smell spreads faster when lit, ink spreads slowly in water, and copper sulphate dissolves faster in hot water than cold. These prove particles are in motion and diffusion increases with temperature.",
+      "topics": ["Matter", "Particle Motion", "Experiments"]
+    },
+    {
+      "q": "Define 'force of attraction between particles'.",
+      "a": "Particles of matter exert forces of attraction on each other. The strength varies: strong in solids, moderate in liquids, negligible in gases.",
+      "topics": ["Matter", "Forces of Attraction"]
+    },
+    {
+      "q": "What activity shows particles attract each other?",
+      "a": "Human chain game: tightly held chains are harder to break. Iron nail is harder to break than chalk or rubber band. Water surface cannot be cut easily. These show varying strengths of attraction.",
+      "topics": ["Matter", "Forces of Attraction", "Experiments"]
+    },
+    {
+      "q": "Give examples of substances with strong, moderate, and weak forces of attraction.",
+      "a": "Strong: Iron (solid). Moderate: Water (liquid). Weak: Air (gas).",
+      "topics": ["Matter", "Forces of Attraction", "Examples"]
+    },
+    {
+      "q": "What is kinetic energy in the context of particles of matter?",
+      "a": "Kinetic energy is the energy of motion possessed by particles. As temperature rises, \\(E_k\\) increases, making particles move faster and diffusion quicker.",
+      "topics": ["Matter", "Particle Motion", "Kinetic Energy"]
+    },
+    {
+      "q": "Summarize the three main characteristics of particles of matter.",
+      "a": "1. They have space between them. 2. They are continuously moving. 3. They attract each other with varying strength.",
+      "topics": ["Matter", "Characteristics of Particles"]
+    },
+    {
+      "q": "Which terms in this section are mentioned but not fully defined?",
+      "a": "Diffusion, Kinetic energy, Cohesion.",
+      "topics": ["Matter", "Unexplained Terms"]
     }
   ]
 }
