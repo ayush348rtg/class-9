@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ezee Notes</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+header {
+  background: #351757;  /* same purple background */
+  color: white;
+  height: 200px;        /* fixed header height */
+  position: relative;   /* allows child elements to be positioned freely */
+}
+.menu-sitename {
+  position: absolute;   /* now you can place it anywhere */
+  top: 10px;            /* distance from top of header */
+  left: 10px;           /* distance from left of header */
+  display: flex;
+  gap: 1px;            /* space between icon and site name */
+  align-items: center;  /* vertically align icon + text */
+}
+.menu-icon {
+  background-color: #4E2778;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;        /* 👈 ensures perfect circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.menu-icon svg {
+  width: 25px;
+  height: 25px;
+  fill: #351757;
+}
+.site-name {
+  color: white;
+  background-color: #4E2778;
+  border-radius: 25px;   /* half of height → pill shape */
+  height: 40px;          /* fixed height */
+  padding: 0 20px;       /* horizontal padding for spacing, top/bottom padding is 0 */
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;    /* vertically center text */
+  white-space: nowrap;    /* prevent text from wrapping */
+}
+.typingTextPosition {
+  display: flex;             /* enables flex layout */
+  justify-content: center;   /* centers horizontally */
+  align-items: center;       /* centers vertically */
+  height: 100%;              /* takes full height of header */
+  width: 100%;               /* full width of header */
+}
+.typing-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;           /* white text */
+  white-space: nowrap;
+  overflow: hidden;
+}
+/*☢️☢️☢️floating box */
+/* Floating bottom box */
+.floating-box {
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #351757;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  display: flex;
+  gap: 15px;               /* space between icons */
+  padding: 0 15px;          /* horizontal padding only */
+  height: 50px;             /* 👈 fixed height */
+  z-index: 1100;
+  align-items: center;      /* center items vertically */
+  width: auto;              /* 👈 width adjusts automatically */
+}
+
+/* Icon container */
+.floating-box span {
+  cursor: pointer;
+  display: flex;             /* centers SVG inside */
+  justify-content: center;
+  align-items: center;
+  width: 36px;               /* circle size slightly smaller than box height */
+  height: 36px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  color: white;              /* default icon color */
+}
+
+/* SVG size */
+.floating-box span svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;        /* inherits color */
+}
+
+/* Active icon (highlighted circle) */
+.floating-box span.active {
+  background: #4E2778;
+  color: white;
+  box-shadow: 0 0 6px rgba(0,0,0,0.3);
+}
+
+/*🟡🟡🟡🟡MAIN */
+main {
+      padding: 10px;
+      background-color: white;
+      font-family: Arial, sans-serif;
+      min-height: 100vh; /* 100% of the viewport height */
+    }
+/*😅😅😅😅Class 11 */
+h1 {
+      font-size: 20px;        /* Control font size */
+      color: #000000;         /* Heading color */
+      margin-left: 1px;      /* 15px from left */
+      padding-left: 10px;     /* Space between line & text */
+      border-left: 6px solid red; /* Big red line */
+    }
+  .subjecThumbnail {
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 10px;
+      margin-left: 0px;
+    }
+    .subjecThumbnailClass {
+      height: 150px; /* 👈 You can change this to any value */
+      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+      border-radius: 0px;
+      margin-right: 10px;
+      display: inline-block;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+ 
+ 
+    
+    header .menu-icon {
+      cursor: pointer;
+      font-size: 1.5rem;
+      margin-right: 1rem;
+    }
+
+    /* Side menu */
+    .side-menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #333;
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+      z-index: 1000;
+    }
+
+    .side-menu a {
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
+      display: block;
+      transition: 0.2s;
+    }
+
+    .side-menu a:hover,
+    .side-menu a.active {
+      background: #575757;
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0,0,0,0.3);
+      display: none;
+      z-index: 900;
+    }
+
+    
+
+    .content-section {
+      display: none;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    
+  </style>
+</head>
+<body>
+ 
+<header> 
+  <div class="menu-sitename" onclick="toggleMenu()">
+    <div class="menu-icon">
+    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M20 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6h-2m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4"/>
+</svg></div>
+    <div class="site-name"> <span style="color:#EE82EE;">Ezee</span>&nbsp;Notes </div>
+  </div>
+  
+  <div class="typingTextPosition">
+  <div id="typingText" class="typing-text"></div></div>
+   </header>
+
+  
+  <!-- Overlay -->
+  <div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+  <!-- Side Menu -->
+  <nav id="sideMenu" class="side-menu">
+    <a href="#" id="link-class11" onclick="showClass('class11')">Class 11</a>
+    <a href="#" id="link-class12" onclick="showClass('class12')">Class 12</a>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Home sections -->
+    <section id="class11" class="content-section active">
+      <h1>Ezee Notes (Class 11)</h1>
+      <div class="subjecThumbnail">
+    <img src="https://api.bots.business/v2/bots/2774949/web-app/physicsNotes11_thumbnail?secret=bgKz3ExID2apFkVApaeC+O2QSJaLwo73U/+BoWA8nhxkiONdphXElJXCCU8uKXDUsN8Hg452sKhsTusx4Km9Ug==" alt="Physics" class="subjecThumbnailClass">
+    <img src="https://api.bots.business/v2/bots/2774949/web-app/chemistryNotes11_thumbnail?secret=RGUo3kclp+5+Mm1dC+hx1v167zGUbu4C3nODyrEx/f8Hs5qtEfGmK0+N1jF4QALFbcS/51C8n/HHd/f9QxUoSA==" alt="Chemistry" class="subjecThumbnailClass">
+    <img src="https://api.bots.business/v2/bots/2774949/web-app/biologyNotes11_thumbnail?secret=er936kh0zW263ZH+40E3/YMFvLhkPjw3+WWpZQeRs3TeSR4g7le2OPf2m1Xjhm03LoOnroxc6X2Sy1WFm1itbg==" alt="Biology" class="subjecThumbnailClass">
+  </div>
+  
+      <h1>Formula Sheets (Class 11)</h1>
+     <div class="subjecThumbnail">
+    <img src="https://api.bots.business/v2/bots/2774949/web-app/physicsFormula11_thumbnail?secret=ex6idUH0rVVDQBW4oX+BoVPzcHoNneNkrOUhqpi1tFpXrv6Uo5vOugxil0GS4WxpfgxLKyIXWrrNGZe4gR1+Ng==" alt="Physics FormulaSheet" class="subjecThumbnailClass">
+    <img src="https://api.bots.business/v2/bots/2774949/web-app/chemistryFormula11_thumbnail?secret=ACcrPr2teYNh9m9kJcG5Fb8HzzlA3NYazOOiwqzVjax0HxW09jrYRLYN9jus7dmCk2fQXwu4EOXqP5JsUyruMg==" alt="Chemistry FormulaSheet" class="subjecThumbnailClass">
+  </div>
+    </section>
+
+ <!-- 〽️〽️Class 12 content〽️〽️  -->
+    <section id="class12" class="content-section">
+      <h2>Class 12</h2>
+      <p>Welcome to Class 12. This section covers advanced topics preparing you for boards and entrance exams.</p>
+    </section>
+
+    <!-- Practice Paper -->
+    <section id="practice" class="content-section">
+      <h2>Practice Papers</h2>
+      <p>Here you can access a variety of practice papers designed to strengthen your preparation. 
+         Solve timed tests, review solutions, and track your progress to get exam-ready.</p>
+    </section>
+
+    <!-- Student Info -->
+    <section id="student" class="content-section">
+      <h2>Student Information</h2>
+      <p>This section contains student details such as name, roll number, subjects enrolled, and performance summary. 
+         Keeping this updated helps track academic growth and achievements.</p>
+    </section>
+  </main>
+
+  <!-- Floating Bottom Box -->
+  <div class="floating-box">
+  
+  <span id="homeIcon" class="active" onclick="showHome()">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25"><path d="M23 9.99V22a2.006 2.006 0 0 1-2 2h-6v-8h-5v8H4a2.006 2.006 0 0 1-2-2V9.99a1.999 1.999 0 0 1 .79-1.59L12.5 1l9.71 7.4A1.999 1.999 0 0 1 23 9.99z" style="fill:#FFFFFF"/></svg>
+  </span>
+
+<span id="practiceIcon" onclick="showPractice()">
+    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill=#FFFFFF viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M11 4.717c-2.286-.58-4.16-.756-7.045-.71A1.99 1.99 0 0 0 2 6v11c0 1.133.934 2.022 2.044 2.007 2.759-.038 4.5.16 6.956.791V4.717Zm2 15.081c2.456-.631 4.198-.829 6.956-.791A2.013 2.013 0 0 0 22 16.999V6a1.99 1.99 0 0 0-1.955-1.993c-2.885-.046-4.76.13-7.045.71v15.081Z" clip-rule="evenodd"/>
+</svg></span>
+
+<span id="studentIcon" onclick="showStudentInfo()">
+    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill=#FFFFFF viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
+</svg></span>
+</div>
+
+
+  <script>
+  //🙂typingText🙂
+  const messages = ["You are welcome", "Happy journey"];
+        let messageIndex = 0;
+        let charIndex = 0;
+        let typing = true;
+        const typingElement = document.getElementById("typingText");
+
+        function typeAnimation() {
+            const currentMessage = messages[messageIndex];
+
+            if (typing) {
+                // Typing forward
+                if (charIndex < currentMessage.length) {
+                    typingElement.textContent += currentMessage.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeAnimation, 120);
+                } else {
+                    typing = false;
+                    setTimeout(typeAnimation, 1000); // Pause before deleting
+                }
+            } else {
+                // Deleting backward
+                if (charIndex > 0) {
+                    typingElement.textContent = currentMessage.substring(0, charIndex - 1);
+                    charIndex--;
+                    setTimeout(typeAnimation, 60);
+                } else {
+                    typing = true;
+                    messageIndex = (messageIndex + 1) % messages.length; // Switch message
+                    setTimeout(typeAnimation, 500); // Pause before typing next
+                }
+            }
+        }
+
+        typeAnimation();
+  //🙂typingText🙂✅️
+    function toggleMenu() {
+      const menu = document.getElementById("sideMenu");
+      const overlay = document.getElementById("overlay");
+      if (menu.style.width === "200px") {
+        closeMenu();
+      } else {
+        menu.style.width = "200px";
+        overlay.style.display = "block";
+      }
+    }
+
+    function closeMenu() {
+      document.getElementById("sideMenu").style.width = "0";
+      document.getElementById("overlay").style.display = "none";
+    }
+
+    function showClass(classId) {
+      // Hide all sections
+      document.querySelectorAll(".content-section").forEach(sec => sec.classList.remove("active"));
+      // Show selected class
+      document.getElementById(classId).classList.add("active");
+
+      // Highlight active link in side menu
+      document.querySelectorAll(".side-menu a").forEach(link => link.classList.remove("active"));
+      document.getElementById("link-" + classId).classList.add("active");
+
+      // Highlight Home icon
+      setActiveIcon("homeIcon");
+
+      closeMenu();
+    }
+
+    function showHome() {
+      // Default to Class 11 if no class selected
+      showClass("class11");
+    }
+
+    function showPractice() {
+      document.querySelectorAll(".content-section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById("practice").classList.add("active");
+      setActiveIcon("practiceIcon");
+    }
+
+    function showStudentInfo() {
+      document.querySelectorAll(".content-section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById("student").classList.add("active");
+      setActiveIcon("studentIcon");
+    }
+
+    function setActiveIcon(iconId) {
+      document.querySelectorAll(".floating-box span").forEach(icon => icon.classList.remove("active"));
+      document.getElementById(iconId).classList.add("active");
+    }
+
+    // On load: highlight Class 11 and Home
+    window.onload = () => {
+      document.getElementById("link-class11").classList.add("active");
+      setActiveIcon("homeIcon");
+    };
+  </script>
+</body>
+  </html>
