@@ -4,66 +4,57 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ezee Notes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
     }
-header {
-  background: #351757;  /* same purple background */
-  color: white;
-  height: 200px;        /* fixed header height */
-  position: relative;   /* allows child elements to be positioned freely */
-}
-.menu-sitename {
-  position: absolute;   /* now you can place it anywhere */
-  top: 10px;            /* distance from top of header */
-  left: 10px;           /* distance from left of header */
-  display: flex;
-  gap: 1px;            /* space between icon and site name */
-  align-items: center;  /* vertically align icon + text */
-}
-.menu-icon {
-  background-color: #4E2778;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;        /* 👈 ensures perfect circle */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.menu-icon svg {
-  width: 25px;
-  height: 25px;
-  fill: #351757;
-}
-.site-name {
-  color: white;
-  background-color: #4E2778;
-  border-radius: 25px;   /* half of height → pill shape */
-  height: 40px;          /* fixed height */
-  padding: 0 20px;       /* horizontal padding for spacing, top/bottom padding is 0 */
-  font-size: 18px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;    /* vertically center text */
-  white-space: nowrap;    /* prevent text from wrapping */
-}
-.typingTextPosition {
-  display: flex;             /* enables flex layout */
-  justify-content: center;   /* centers horizontally */
-  align-items: center;       /* centers vertically */
-  height: 100%;              /* takes full height of header */
-  width: 100%;               /* full width of header */
-}
-.typing-text {
-  font-size: 18px;
-  font-weight: bold;
-  color: white;           /* white text */
-  white-space: nowrap;
-  overflow: hidden;
-}
+    header {
+      background: #351757;  /* same purple background */
+      color: white;
+      height: 200px;        /* fixed header height */
+      position: relative;   /* allows child elements to be positioned freely */
+    }
+    .head-menu-sitename {
+      position: absolute;   /* now you can place it anywhere */
+      top: 10px;            /* distance from top of header */
+      left: 10px;           /* distance from left of header */
+      display: flex;
+      gap: 7px;            /* space between icon and site name */
+      align-items: center;  /* vertically align icon + text */
+    }
+    .head-classicon {
+      background-color: #4E2778;
+      border-radius: 50%;
+      height: 40px;
+      width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .site-name {
+      color: white;
+      background-color: #4E2778;
+      border-radius: 25px;   /* half of height → pill shape */
+      height: 40px;          /* fixed height */
+      padding: 0 20px;       /* horizontal padding for spacing, top/bottom padding is 0 */
+      font-size: 18px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;    /* vertically center text */
+      white-space: nowrap;    /* prevent text from wrapping */
+    }
+    
+    main {
+      padding: 10px;
+      background-color: white;
+      font-family: Arial, sans-serif;
+      min-height: 100vh; /* 100% of the viewport height */
+    }
 /*☢️☢️☢️floating box */
 /* Floating bottom box */
 .floating-box {
@@ -111,38 +102,14 @@ header {
   box-shadow: 0 0 6px rgba(0,0,0,0.3);
 }
 
-/*🟡🟡🟡🟡MAIN */
-main {
-      padding: 10px;
-      background-color: white;
-      font-family: Arial, sans-serif;
-      min-height: 100vh; /* 100% of the viewport height */
-    }
 /*😅😅😅😅Class 11 */
-h1 {
+    h1 {
       font-size: 20px;        /* Control font size */
       color: #000000;         /* Heading color */
-      margin-left: 1px;      /* 15px from left */
+      margin-left: 0;      /* 15px from left */
       padding-left: 10px;     /* Space between line & text */
-      border-left: 6px solid red; /* Big red line */
+      border-left: 5px solid red; /* Big red line */
     }
-  .subjecThumbnail {
-      overflow-x: auto;
-      white-space: nowrap;
-      padding: 10px;
-      margin-left: 0px;
-    }
-    .subjecThumbnailClass {
-      height: 150px; /* 👈 You can change this to any value */
-      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
-      border-radius: 0px;
-      margin-right: 10px;
-      display: inline-block;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
- 
- 
-    
     header .menu-icon {
       cursor: pointer;
       font-size: 1.5rem;
@@ -176,21 +143,6 @@ h1 {
     .side-menu a.active {
       background: #575757;
     }
-
-    /* Overlay */
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: rgba(0,0,0,0.3);
-      display: none;
-      z-index: 900;
-    }
-
-    
-
     .content-section {
       display: none;
     }
@@ -205,21 +157,25 @@ h1 {
 <body>
  
 <header> 
-  <div class="menu-sitename" onclick="toggleMenu()">
-    <div class="menu-icon">
-    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-  <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M20 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6h-2m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4"/>
-</svg></div>
+  <div class="head-menu-sitename" onclick="toggleMenu()">
+    <div class="head-classicon">
+      <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M20 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6h-2m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4"/>
+      </svg>
+    </div>
     <div class="site-name"> <span style="color:#EE82EE;">Ezee</span>&nbsp;Notes </div>
   </div>
-  
-  <div class="typingTextPosition">
-  <div id="typingText" class="typing-text"></div></div>
+  <div style="display:flex; justify-content:center; align-items:center; height:100%; width:100%;">
+  <div id="typingText" style="font-size:18px; font-weight:bold; color:white; white-space:nowrap; overflow:hidden;"></div></div>
    </header>
 
   
   <!-- Overlay -->
-  <div id="overlay" class="overlay" onclick="closeMenu()"></div>
+  <div id="overlay" onclick="closeMenu()" 
+     style="position:fixed; top:0; left:0; height:100%; width:100%; 
+            background:rgba(0,0,0,0.3); display:none; z-index:900;">
+  </div>
+
 
   <!-- Side Menu -->
   <nav id="sideMenu" class="side-menu">
@@ -233,16 +189,62 @@ h1 {
     <section id="class11" class="content-section active">
       <h1>Ezee Notes (Class 11)</h1>
       <div class="subjecThumbnail">
-    <img src="https://api.bots.business/v2/bots/2774949/web-app/physicsNotes11_thumbnail?secret=bgKz3ExID2apFkVApaeC+O2QSJaLwo73U/+BoWA8nhxkiONdphXElJXCCU8uKXDUsN8Hg452sKhsTusx4Km9Ug==" alt="Physics" class="subjecThumbnailClass">
-    <img src="https://api.bots.business/v2/bots/2774949/web-app/chemistryNotes11_thumbnail?secret=RGUo3kclp+5+Mm1dC+hx1v167zGUbu4C3nODyrEx/f8Hs5qtEfGmK0+N1jF4QALFbcS/51C8n/HHd/f9QxUoSA==" alt="Chemistry" class="subjecThumbnailClass">
-    <img src="https://api.bots.business/v2/bots/2774949/web-app/biologyNotes11_thumbnail?secret=er936kh0zW263ZH+40E3/YMFvLhkPjw3+WWpZQeRs3TeSR4g7le2OPf2m1Xjhm03LoOnroxc6X2Sy1WFm1itbg==" alt="Biology" class="subjecThumbnailClass">
-  </div>
+        <!-- physics -->
+        <div class="cover-card loading_card p_n11" id="card1">
+          <div class="second-shadow"></div>
+          <div class="third-shadow"></div>
+          <div class="title">Ezee Notes</div>
+          <img class="cover-image"
+               src="https://ayush348rtg.github.io/doc/tele/source/cover/physicss-N-covr-11.png"
+               alt="Cover Image">
+          <div class="subject">Physics</div>
+        </div>
+        <!-- Chemistry -->
+        <div class="cover-card loading_card c_n11" id="card1">
+          <div class="second-shadow"></div>
+          <div class="third-shadow"></div>
+          <div class="title">Ezee Notes</div>
+          <img class="cover-image"
+               src="https://ayush348rtg.github.io/doc/tele/source/cover/biology-N-covr-11.png"
+               alt="Cover Image">
+          <div class="subject">Chemistry</div>
+        </div>
+        <!-- Bio -->
+        <div class="cover-card loading_card b_n11" id="card1">
+          <div class="second-shadow"></div>
+          <div class="third-shadow"></div>
+          <div class="title">Ezee Notes</div>
+          <img class="cover-image"
+               src="https://ayush348rtg.github.io/doc/tele/source/cover/chemistry-N-covr-11.png"
+               alt="Cover Image">
+          <div class="subject">Biology</div>
+        </div>
+      </div>
   
       <h1>Formula Sheets (Class 11)</h1>
      <div class="subjecThumbnail">
-    <img src="https://api.bots.business/v2/bots/2774949/web-app/physicsFormula11_thumbnail?secret=ex6idUH0rVVDQBW4oX+BoVPzcHoNneNkrOUhqpi1tFpXrv6Uo5vOugxil0GS4WxpfgxLKyIXWrrNGZe4gR1+Ng==" alt="Physics FormulaSheet" class="subjecThumbnailClass">
-    <img src="https://api.bots.business/v2/bots/2774949/web-app/chemistryFormula11_thumbnail?secret=ACcrPr2teYNh9m9kJcG5Fb8HzzlA3NYazOOiwqzVjax0HxW09jrYRLYN9jus7dmCk2fQXwu4EOXqP5JsUyruMg==" alt="Chemistry FormulaSheet" class="subjecThumbnailClass">
-  </div>
+  <!-- physics -->
+  <div class="formulaCover-card loading_card p_f11" id="card1">
+      <div class="second-shadow"></div>
+      <div class="third-shadow"></div>
+      <div class="title">physics</div>
+      <img class="cover-image"
+           src="https://ayush348rtg.github.io/doc/tele/source/cover/physicss-F-covr-11.png"
+           alt="Cover Image">
+      <div class="subject">Formula Sheets</div>
+    </div>
+  <!-- Chemistry -->
+    <div class="formulaCover-card loading_card c_f11" id="card1">
+      <div class="second-shadow"></div>
+      <div class="third-shadow"></div>
+      <div class="title">Chemistry</div>
+      <img class="cover-image"
+           src="https://ayush348rtg.github.io/doc/tele/source/cover/chemistry-F-covr-11.png"
+           alt="Cover Image">
+      <div class="subject">Formula Sheets</div>
+    </div>
+</div>
+
     </section>
 
  <!-- 〽️〽️Class 12 content〽️〽️  -->
@@ -263,6 +265,10 @@ h1 {
       <h2>Student Information</h2>
       <p>This section contains student details such as name, roll number, subjects enrolled, and performance summary. 
          Keeping this updated helps track academic growth and achievements.</p>
+    </section>
+    
+    <section id="note11p" class="content-section">
+      hay
     </section>
   </main>
 
@@ -286,39 +292,54 @@ h1 {
 
 
   <script>
+  //control cover loading
+  
+// Simulate loading delay
+setTimeout(() => {
+  document.querySelectorAll(".cover-card").forEach(card => {
+    card.classList.remove("loading_card");
+    card.classList.add("show_card");
+  });
+}, 1000);
+setTimeout(() => {
+  document.querySelectorAll(".formulaCover-card").forEach(card => {
+    card.classList.remove("loading_card");
+    card.classList.add("show_formulacard");
+  });
+}, 1000);
   //🙂typingText🙂
   const messages = ["You are welcome", "Happy journey"];
-        let messageIndex = 0;
-        let charIndex = 0;
-        let typing = true;
-        const typingElement = document.getElementById("typingText");
+  let messageIndex = 0;
+  let charIndex = 0;
+  let typing = true;
+  const typingElement = document.getElementById("typingText");
 
-        function typeAnimation() {
-            const currentMessage = messages[messageIndex];
+  function typeAnimation() {
+    const currentMessage = messages[messageIndex];
 
-            if (typing) {
-                // Typing forward
-                if (charIndex < currentMessage.length) {
-                    typingElement.textContent += currentMessage.charAt(charIndex);
-                    charIndex++;
-                    setTimeout(typeAnimation, 120);
-                } else {
-                    typing = false;
-                    setTimeout(typeAnimation, 1000); // Pause before deleting
-                }
-            } else {
-                // Deleting backward
-                if (charIndex > 0) {
-                    typingElement.textContent = currentMessage.substring(0, charIndex - 1);
-                    charIndex--;
-                    setTimeout(typeAnimation, 60);
-                } else {
-                    typing = true;
-                    messageIndex = (messageIndex + 1) % messages.length; // Switch message
-                    setTimeout(typeAnimation, 500); // Pause before typing next
-                }
-            }
+    if (typing) {
+        // Typing forward
+        if (charIndex < currentMessage.length) {
+            typingElement.textContent += currentMessage.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeAnimation, 120);
+        } else {
+            typing = false;
+            setTimeout(typeAnimation, 1000); // Pause before deleting
         }
+    } else {
+        // Deleting backward
+        if (charIndex > 0) {
+            typingElement.textContent = currentMessage.substring(0, charIndex - 1);
+            charIndex--;
+            setTimeout(typeAnimation, 60);
+        } else {
+            typing = true;
+            messageIndex = (messageIndex + 1) % messages.length; // Switch message
+            setTimeout(typeAnimation, 500); // Pause before typing next
+        }
+    }
+  }
 
         typeAnimation();
   //🙂typingText🙂✅️
@@ -353,6 +374,12 @@ h1 {
 
       closeMenu();
     }
+
+
+
+
+
+
 
     function showHome() {
       // Default to Class 11 if no class selected
